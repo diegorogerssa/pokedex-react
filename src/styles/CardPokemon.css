@@ -1,0 +1,16 @@
+.containerCard{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: rgb(236, 236, 236);
+    padding: 20px;
+
+}
+.containerCard img{
+    width: 150px;
+}
+.containerCard h1{
+    font-size: 18px;
+    text-align: center;
+    margin-bottom: -10px;
+}
