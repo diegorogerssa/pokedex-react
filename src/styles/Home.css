@@ -3,10 +3,16 @@
     justify-content: center;
     flex-wrap: wrap;
     max-width: 1200px;
+    margin: auto;
+}
+.linkHome{
+    text-decoration: none;
 }
 .inputHome{
     display: flex;
     justify-content: center;
+    background-color: #263238;
+    padding: 20px;
 }
 .inputHome input{
     margin-top: 10px;
