@@ -14,6 +14,7 @@ class pokeDetails extends Component {
             color:'',
             evolution:'',
             pokemonEvolution:'',
+            pokemonEvolution2:'',
             imageEvolution:''
         }
         
@@ -48,6 +49,7 @@ class pokeDetails extends Component {
         if (pokemonEvolution1 === pokemonTitle){
             this.setState({
                 pokemonEvolution:pokemonEvolution2,
+                pokemonEvolution2:pokemonEvolution1
             },() =>{
                 const { pokemonTitle } = this.state
                 console.log(this.state.pokemonEvolution, pokemonTitle)
@@ -57,6 +59,7 @@ class pokeDetails extends Component {
         else if(pokemonEvolution2 === pokemonTitle){
             this.setState({
                 pokemonEvolution:pokemonEvolution3,
+                pokemonEvolution2:pokemonEvolution1
             },() =>{
                 const { pokemonTitle } = this.state
                 console.log(this.state.pokemonEvolution)
@@ -66,6 +69,7 @@ class pokeDetails extends Component {
             this.setState({
                 
                 pokemonEvolution:pokemonEvolution3,
+                pokemonEvolution2:pokemonEvolution2
             },() =>{
                 const { pokemonTitle } = this.state
                 console.log(this.state.pokemonEvolution)//!criar um state false ou true para colocar uma renderização condicional
@@ -75,6 +79,7 @@ class pokeDetails extends Component {
 
     }
 
+       
 
       pokeDetails02 = async() =>{
         const { pokemonEvolution } = this.state
@@ -106,13 +111,12 @@ class pokeDetails extends Component {
    
 
 render(){
-    const { pokemonTitle, pokemonImage, pokemonAbility01,pokemonAbility02, color, pokemonEvolution, imageEvolution } = this.state
+    const { pokemonTitle, pokemonImage, pokemonAbility01,pokemonAbility02, color, pokemonEvolution, pokemonEvolution2, imageEvolution } = this.state
     return (
         <div>
             <NavBar/>
             <div className='containerDetails' style={{backgroundColor:`${color}`}}>
-            <div className='backgroundImage'>
-            </div>
+            <div className='backgroundImage'></div>
                 <div className='titleImage'>
                     <h1>{pokemonTitle}</h1>
                     <img src={pokemonImage} alt={pokemonTitle} />
@@ -126,6 +130,11 @@ render(){
                     {/* renderização condicional */}
                         <h4>{pokemonEvolution}</h4>
                         <img src={imageEvolution} alt="evolução" />
+                    </div>
+                    <div className='imageEvolution'> 
+                    {/* renderização condicional */}
+                        <h4>{pokemonEvolution2}</h4>
+                        {/* <img src={imageEvolution} alt="evolução" /> */}
                     </div>
             </div>
         </div>

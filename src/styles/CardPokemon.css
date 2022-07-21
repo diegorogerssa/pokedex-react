@@ -1,13 +1,18 @@
+
+
 .containerCard{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    flex-wrap: wrap;
     background-color: rgba(0, 0, 0, 0.034);
     padding: 20px;
     margin: 5px;
-    width: 100px;
     border-radius: 5px;
+    border: 1px solid black;
+    width: 100px;
+    height: 110px;
 }
 .containerCard:hover{
     background-color: rgba(0, 0, 0, 0.356);
@@ -21,4 +26,13 @@
     text-align: center;
     color: rgb(61, 61, 61);
     text-decoration-style: none;
+}
+
+
+.linkHome{
+    text-decoration: none;
+}
+.pagination{
+    display: flex;
+    justify-content: space-around;
 }

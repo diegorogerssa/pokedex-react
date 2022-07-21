@@ -1,13 +1,16 @@
+containerHome{
+    display: flex;
+    flex-direction: row;
+}
+
 .container{
     display: flex;
-    justify-content: center;
     flex-wrap: wrap;
+    justify-content: center;
     max-width: 1200px;
     margin: auto;
 }
-.linkHome{
-    text-decoration: none;
-}
+
 .inputHome{
     display: flex;
     justify-content: center;

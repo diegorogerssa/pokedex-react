@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
-import { fetchPokeAPI, fetchPokeSpeciesAPI } from '../services/PokeAPI'
+import { fetchPokemon, fetchPokemonURL } from '../services/PokeAPI'
 import CardPokemon from './CardPokemon'
 import '../styles/Home.css'
-import { Link } from 'react-router-dom'
+
 import NavBar from './NavBar'
+import Search from './Search'
+
 
 class Home extends Component {
   constructor() {
@@ -12,77 +14,76 @@ class Home extends Component {
       inputPokemons: '',
       arrayPokemons: [],
       msg: false,
-      template:''
+      template:'',
+      page:0,
+      pageTotal:0,
+      color:[]
     }
+    console.log(this.state.page);
+  }
+  
+  componentDidMount() {   //?didMount
+      this.getPokemon()
+  
   }
 
-  componentDidMount() {
-    this.returnAPI()
-    this.returnSpeciesAPI()
+  left = () => {
+    this.setState((prevState)=>({
+      page:prevState.page -1
+    }), async () => this.getPokemon())
+  }
+  right = () => {
+    this.setState((prevState)=>({
+      page:prevState.page +1
+    }),async () => this.getPokemon())
+  }
+ 
+
+
+  getPokemon = async () => {
+    const {  page } = this.state
+    const itensPerPages = 49
+    const data = await fetchPokemon(itensPerPages, itensPerPages * page)
+    
+   const promisses = data.results.map( async (pokemon) => {
+    return await fetchPokemonURL(pokemon.url)
+   })
+  const result = await  Promise.all(promisses)
+   this.setState({
+    arrayPokemons:result,
+    pageTotal: Math.ceil(data.count / itensPerPages),
+   })
   }
 
-  handleChange = ({ target }) => {
-    const { value } = target
+
+  handleChange = ({ target }) => {    
+    const { value } = target          //?function
     this.setState({
       inputPokemons: value
     })
   }
 
-  returnSpeciesAPI = async () => {
-    const arrayColor = []
-    for (let index = 1; index <= 32; index++) {
-      const responseSpecies = await fetchPokeSpeciesAPI(index)
-      const resultSpecies = responseSpecies.color.name
-      arrayColor.push(resultSpecies)
-    }
-    this.setState({
-      color: arrayColor
-    })
-  }
-
-  returnAPI = async () => {
-    const array = []
-    for (let index = 1; index <= 32; index++) {
-      const response = await fetchPokeAPI(index)
-      array.push(response)
-    }
-    this.setState({
-      arrayPokemons: array,
-    })
-  }
-
+    
   render() {
-    const { arrayPokemons, msg, inputPokemons } = this.state
+    const { arrayPokemons, msg, inputPokemons, page, pageTotal } = this.state
     return (
       <div className='containerHome'>
         <NavBar />
-        <div className='inputHome'>
-          <label htmlFor="search">
-            <input
-              value={inputPokemons}
-              type="text"
-              name="search"
-              id="search"
-              placeholder='Digite o nome do Pokemon'
-              onChange={this.handleChange}
-            />
-          </label>
-        </div>
+        <Search 
+          handleInput = { inputPokemons } 
+          handleChange={this.handleChange}
+        />
+        
+       
         <div className='container'>
-          {
-            arrayPokemons.filter((ele) => ele.name.startsWith(inputPokemons)).map((ele) => (
-              <div>
-                <Link className='linkHome'  to={ `/pokeDetails/${ele.id}` } >
-                <CardPokemon
-                  nome={ele.name}
-                  image={ele.sprites.other.home.front_default}
-                  key={ele.id}
-                  details = {ele.id}
-                />
-              </Link>
-              </div>
-            ))
-          }
+          <CardPokemon 
+            arrayPokemons = { arrayPokemons }
+            inputPokemons = { inputPokemons }
+            page = { page }
+            pageTotal ={ pageTotal }
+            left = { this.left }
+            right = { this.right }
+          />
         </div>
       </div>
     )

@@ -1,0 +1,17 @@
+.PaginationContainer{
+ display: flex;
+ align-items: center;
+}
+.pages{
+  padding: 10px 10px 10px 10px;
+}
+.PaginationContainer button{
+  background-color: #263238;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+.PaginationContainer button:hover{
+  background-color: #EF5350;
+  
+}

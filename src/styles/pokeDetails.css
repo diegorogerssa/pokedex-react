@@ -11,6 +11,8 @@
   margin-top: 15px;
   width: 800px;
   height: 600px;
+  z-index: 0;
+  opacity:0.9;
 }
 
 .containerDetails h1{
