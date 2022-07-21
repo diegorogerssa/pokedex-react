@@ -34,7 +34,7 @@ class CardPokemon extends Component{
                 <div>
                                 
                     <div className="pagination">
-                      <h1>Pokedex</h1>
+                      <h1>PokedexX</h1>
                       <Pagination
                           page = {page }
                           pageTotal = {pageTotal}
