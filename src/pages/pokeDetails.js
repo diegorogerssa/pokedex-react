@@ -15,7 +15,9 @@ class pokeDetails extends Component {
             evolution:'',
             pokemonEvolution:'',
             pokemonEvolution2:'',
-            imageEvolution:''
+            pokemonEvolution3:'',
+            imageEvolution:'',
+            imageEvolution2:''
         }
         
     }
@@ -49,7 +51,7 @@ class pokeDetails extends Component {
         if (pokemonEvolution1 === pokemonTitle){
             this.setState({
                 pokemonEvolution:pokemonEvolution2,
-                pokemonEvolution2:pokemonEvolution1
+                pokemonEvolution2:pokemonEvolution3
             },() =>{
                 const { pokemonTitle } = this.state
                 console.log(this.state.pokemonEvolution, pokemonTitle)
@@ -58,8 +60,8 @@ class pokeDetails extends Component {
        }
         else if(pokemonEvolution2 === pokemonTitle){
             this.setState({
-                pokemonEvolution:pokemonEvolution3,
-                pokemonEvolution2:pokemonEvolution1
+                pokemonEvolution:pokemonEvolution1,
+                pokemonEvolution2:pokemonEvolution3
             },() =>{
                 const { pokemonTitle } = this.state
                 console.log(this.state.pokemonEvolution)
@@ -68,7 +70,7 @@ class pokeDetails extends Component {
         }else if(pokemonEvolution3 === pokemonTitle) {
             this.setState({
                 
-                pokemonEvolution:pokemonEvolution3,
+                pokemonEvolution:pokemonEvolution1,
                 pokemonEvolution2:pokemonEvolution2
             },() =>{
                 const { pokemonTitle } = this.state
@@ -82,11 +84,14 @@ class pokeDetails extends Component {
        
 
       pokeDetails02 = async() =>{
-        const { pokemonEvolution } = this.state
+        const { pokemonEvolution, pokemonEvolution2 } = this.state
          const responseEvolution = await fetchPokeAPI(pokemonEvolution)
-         const image = responseEvolution.sprites.other.home.front_default                             
+         const responseEvolution2 = await fetchPokeAPI(pokemonEvolution2)         
+         const image = responseEvolution.sprites.other.home.front_default
+         const image2 = responseEvolution2.sprites.other.home.front_default                               
          this.setState({
              imageEvolution:image,
+             imageEvolution2:image2
          })
      }
 
@@ -95,10 +100,11 @@ class pokeDetails extends Component {
     pokeDetails = async () => {
         const { id } = this.props.match.params
         const response = await fetchPokeAPI(id)
-        const pokemonTitle = response.name
-        const image = response.sprites.other.home.front_default
-        const ability01 = response.abilities[0].ability.name
-        const ability02 = response.abilities[1].ability.name
+        console.log(response)
+        const pokemonTitle = await response.name
+        const image = await response.sprites.other.home.front_default
+        const ability01 = await response.abilities[0].ability.name
+        const ability02 = await response.abilities[1].ability.name
         this.setState({
           pokemonTitle: pokemonTitle,
           pokemonImage: image,
@@ -111,7 +117,7 @@ class pokeDetails extends Component {
    
 
 render(){
-    const { pokemonTitle, pokemonImage, pokemonAbility01,pokemonAbility02, color, pokemonEvolution, pokemonEvolution2, imageEvolution } = this.state
+    const { pokemonTitle, pokemonImage, pokemonAbility01,pokemonAbility02, color, pokemonEvolution, pokemonEvolution2, imageEvolution, imageEvolution2 } = this.state
     return (
         <div>
             <NavBar/>
@@ -127,14 +133,18 @@ render(){
                     <h3>{pokemonAbility02}</h3>
                 </div>
                     <div className='imageEvolution'> 
-                    {/* renderização condicional */}
-                        <h4>{pokemonEvolution}</h4>
-                        <img src={imageEvolution} alt="evolução" />
+                    <div>
+                        {/* renderização condicional */}
+                            <h4>{pokemonEvolution}</h4>
+                            <img src={imageEvolution} alt="evolução" />
                     </div>
-                    <div className='imageEvolution'> 
-                    {/* renderização condicional */}
-                        <h4>{pokemonEvolution2}</h4>
-                        {/* <img src={imageEvolution} alt="evolução" /> */}
+                    
+                    
+                    <div>
+                        {/* renderização condicional */}
+                            <h4>{pokemonEvolution2}</h4>
+                            <img src={imageEvolution2} alt="evolução" />
+                    </div>
                     </div>
             </div>
         </div>
